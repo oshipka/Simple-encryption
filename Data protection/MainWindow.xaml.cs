@@ -17,61 +17,75 @@ using System.Windows.Shapes;
 
 namespace Data_protection
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
+	{
+		private bool triedBruteforce = false;
+		public MainWindow()
+		{
+			InitializeComponent();
+		}
 
-        private void Cipher_Button_Click(object sender, RoutedEventArgs e)
-        {
-            int key = 0;
-            if(CaesarSelection.IsChecked == true)
-            {
-                int.TryParse(CaesarKey.Text, out key);
-            }
-            OutputBox.Text = Utils.Cipher(InputBox.Text, CaesarSelection.IsChecked, VigenerSelection.IsChecked, key, Keyword.Text);
-        }
+		private void Cipher_Button_Click(object sender, RoutedEventArgs e)
+		{
+			int key = 0;
+			if(CaesarSelection.IsChecked == true)
+			{
+				int.TryParse(CaesarKey.Text, out key);
+			}
+			OutputBox.Text = Utils.Cipher(InputBox.Text, CaesarSelection.IsChecked, VigenerSelection.IsChecked, key, Keyword.Text);
+		}
 
-        private void Decipher_Button_Click(object sender, RoutedEventArgs e)
-        {
-            int key = 0;
-            if (CaesarSelection.IsChecked == true && notBruteforce.IsChecked == true)
-            {
-                int.TryParse(CaesarKey.Text, out key);
-            }
-            OutputBox.Text = Utils.Decipher(InputBox.Text, CaesarSelection.IsChecked, VigenerSelection.IsChecked, notBruteforce.IsChecked, key, Keyword.Text);
-        }
+		private void Decipher_Button_Click(object sender, RoutedEventArgs e)
+		{
+			int key = 0;
+			if (CaesarSelection.IsChecked == true && notBruteforce.IsChecked == true)
+			{
+				int.TryParse(CaesarKey.Text, out key);
+			}
 
-        private async void btnOpenFile_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+			if (!triedBruteforce)
+			{
+				OutputBox.Text = Utils.Decipher(InputBox.Text, CaesarSelection.IsChecked, VigenerSelection.IsChecked, notBruteforce.IsChecked, key, Keyword.Text);
+				if (notBruteforce.IsChecked==false)
+				{
+					triedBruteforce = true;
+				}
+			}
 
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+			if (triedBruteforce)
+			{
+				OutputBox.Text = Utils.Decipher(OutputBox.Text, CaesarSelection.IsChecked, VigenerSelection.IsChecked, notBruteforce.IsChecked, key, Keyword.Text);
+			}
+}
 
-            Nullable<bool> result = dlg.ShowDialog();
+		private async void btnOpenFile_Click(object sender, RoutedEventArgs e)
+		{
+			Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-                try
-                {
-                    using (StreamReader sr = new StreamReader(filename))
-                    {
-                        String line = await sr.ReadToEndAsync();
-                        InputBox.Text = line;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    InputBox.Text = "Could not read the file";
-                }
-            }
-        }
-    }
+			dlg.DefaultExt = ".txt";
+			dlg.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+
+			Nullable<bool> result = dlg.ShowDialog();
+
+			if (result == true)
+			{
+				string filename = dlg.FileName;
+				try
+				{
+					using (StreamReader sr = new StreamReader(filename))
+					{
+						String line = await sr.ReadToEndAsync();
+						InputBox.Text = line;
+					}
+				}
+				catch (Exception ex)
+				{
+					InputBox.Text = "Could not read the file";
+				}
+			}
+		}
+	}
 }

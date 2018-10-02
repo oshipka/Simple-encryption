@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Data_protection
 {
-    class Utils
+    internal static class Utils
     {
-        public static string alphabet = "abcdefghijklmnopqrstuvwxyz";
-        public static string frequencyAlphabet = "etaoinshrdlcumwfgypbvkjxqz";
+        private const string Alphabet = "abcdefghijklmnopqrstuvwxyz";
+        private const string FrequencyAlphabet = "etaoinshrdlcumwfgypbvkjxqz";
 
 
         public static string Cipher(string inputText, bool? caesar, bool? vigener, int key, string keyword)
@@ -45,35 +45,35 @@ namespace Data_protection
 
         private static string DVigener(string inputText, bool? keyKnown, string keyword)
         {
-            if (keyKnown == true)
+            if (keyKnown is true)
             {
-                string keywordAlphabet = CaesarEditAlphabet(keyword);
-                string result = "";
-                int j = 0;
-                foreach (char x in inputText)
+                var result = "";
+                var j = 0;
+                foreach (var x in inputText)
                 {
-                    if (x == ' ' || !alphabet.Contains(x))
+                    if (x == ' ' || !Alphabet.Contains(x))
                     {
                         result += x;
                     }
                     else
                     {
-                        int t1 = alphabet.IndexOf(x) - alphabet.IndexOf(keyword[j]);
-                        int t2 = t1 % 26;
+                        var t1 = Alphabet.IndexOf(x) - Alphabet.IndexOf(keyword[j]);
+                        var t2 = t1 % 26;
                         if (t2 < 0)
                         {
                             t2 = 26 + t2;
                         }
-                        result += alphabet[t2];
+
+                        result += Alphabet[t2];
                         j = (j + 1) % keyword.Length;
                     }
                 }
 
                 return result;
             }
-            if (keyKnown == false)
+            else if (keyKnown is false)
             {
-                return "Mate, I won't bruteforce this text, sorry.";
+                return "I won't bruteforce this text, sorry.";
             }
             else
             {
@@ -91,7 +91,7 @@ namespace Data_protection
 
                 foreach (char x in inputText)
                 {
-                    if (x == ' ' || !alphabet.Contains(x))
+                    if (x == ' ' || !Alphabet.Contains(x))
                     {
                         result += x;
                     }
@@ -103,7 +103,7 @@ namespace Data_protection
                         {
                             t2 = 26 + t2;
                         }
-                        result += alphabet[t2];
+                        result += Alphabet[t2];
                     }
                 }
 
@@ -111,7 +111,7 @@ namespace Data_protection
             }
             if(keyKnown == false)
             {
-                return frequencyAnalysis(inputText);
+                return FrequencyAnalysis(inputText);
             }
             else
             {
@@ -119,99 +119,57 @@ namespace Data_protection
             }
         }
 
-        private static string frequencyAnalysis(string inputText)
+        private static string FrequencyAnalysis(string inputText)
         {
-            
-
-            int maxSum = 0;
-            string result = "";
-
-            
-                getPermutations(alphabet.ToCharArray(), ref maxSum, ref result, inputText);
-
+            var result = "";
+            var thisFrequencyAlphabet = new List<Pair>();
+            foreach (var letter in Alphabet)
+            {
+                var pair = new Pair();
+                pair.Letter = letter;
+                pair.Counter = inputText.Count(f => f == letter);
+                
+                thisFrequencyAlphabet.Add(pair);
+            }
+            Pair.Sort(thisFrequencyAlphabet);
+            var thisFrequencyAlphabetOrdered = "";
+            foreach (var letter in thisFrequencyAlphabet)
+            {
+                thisFrequencyAlphabetOrdered += letter.Letter;
+            }
+            foreach (var letter in inputText)
+            {
+                if (Alphabet.Contains(letter))
+                {
+                    result += FrequencyAlphabet[thisFrequencyAlphabetOrdered.IndexOf(letter)];
+                }
+                else
+                {
+                    result += letter;
+                }
+            }
             
 
             return result;
         }
-        private static void Swap(ref char a, ref char b)
+
+        private static string Caesar(string inputText, int key, string keyword)
         {
-            if (a == b) return;
-
-            a ^= b;
-            b ^= a;
-            a ^= b;
-        }
-        public static void getPermutations(char[] list, ref int maxSum, ref string result, string inputText)
-        {
-            int x = list.Length - 1;
-            GetPermutations(list, 0, x, ref maxSum, ref result, inputText);
-        }
-        private static void GetPermutations(char[] list, int recursionDepth, int maxDepth, ref int maxSum, ref string result, string inputText)
-        {
-            if (recursionDepth == maxDepth)
-            {
-                for (int key = 0; key < alphabet.Length; key++)
-                {
-
-                    int currentSum = 0;
-                    string currentResult = DCaesar(inputText, true, key, list.ToString());
-
-                    var thisFrequencyAlphabet = new List<pair>();
-                    foreach (char letter in alphabet)
-                    {
-                        var pair = new pair();
-                        pair.letter = letter;
-                        pair.counter = currentResult.Count(f => f == letter);
-                        thisFrequencyAlphabet.Add(pair);
-                    }
-                    pair.Sort(thisFrequencyAlphabet);
-                    thisFrequencyAlphabet.ToArray();
-                    string thisfrequencyAlphabet = "";
-                    foreach (pair x in thisFrequencyAlphabet)
-                    {
-                        thisfrequencyAlphabet = string.Concat(x.letter, thisfrequencyAlphabet);
-                    }
-
-                    for (int i = 0; i < thisfrequencyAlphabet.Length; i++)
-                    {
-                        currentSum += i * alphabet.IndexOf(thisfrequencyAlphabet[i]);
-                    }
-
-                    if (currentSum > maxSum)
-                    {
-                        result = currentResult;
-                        maxSum = currentSum;
-                    }
-                    System.Diagnostics.Trace.WriteLine(currentResult);
-                }
-            }
-            else
-                for (int i = recursionDepth; i <= maxDepth; i++)
-                {
-                    Swap(ref list[recursionDepth], ref list[i]);
-                    GetPermutations(list, recursionDepth + 1, maxDepth, ref maxSum, ref result, inputText);
-                    Swap(ref list[recursionDepth], ref list[i]);
-                    
-                }
-        }
-
-        public static string Caesar(string inputText, int key, string keyword)
-        {
-            string keywordAlphabet = CaesarEditAlphabet(keyword);
-            string result = "";
+            var keywordAlphabet = CaesarEditAlphabet(keyword);
+            var result = "";
             key = key % 26;
 
 
-            foreach (char x in inputText)
+            foreach (var x in inputText)
             {
-                if (x == ' '|| !alphabet.Contains(x))
+                if (x == ' '|| !Alphabet.Contains(x))
                 {
                     result += x;
                 }
                 else
                 {
-                    int t1 = alphabet.IndexOf(x) + key;
-                    int t2 = t1 % 26;
+                    var t1 = Alphabet.IndexOf(x) + key;
+                    var t2 = t1 % 26;
                     if (t2 < 0)
                     {
                         t2 = 26 + t2;
@@ -222,12 +180,13 @@ namespace Data_protection
 
             return result;
         }
-        public static string Vigener(string inputText, string keyword)
-        {
-            string result = "";
 
-            int j = 0;
-            foreach (char x in inputText)
+        private static string Vigener(string inputText, string keyword)
+        {
+            var result = "";
+
+            var j = 0;
+            foreach (var x in inputText)
             {
                 if (x == ' ')
                 {
@@ -235,65 +194,61 @@ namespace Data_protection
                 }
                 else
                 {
-                    int t1 = alphabet.IndexOf(x)+ alphabet.IndexOf(keyword[j]);
-                    int t2 = t1 % 26;
+                    var t1 = Alphabet.IndexOf(x)+ Alphabet.IndexOf(keyword[j]);
+                    var t2 = t1 % 26;
                     if (t2 < 0)
                     {
                         t2 = 26 + t2;
                     }
-                    result += alphabet[t2];
+                    result += Alphabet[t2];
                     j = (j + 1) % keyword.Length;
                 }
             }
             return result;
         }
 
-        static string CaesarEditAlphabet(string keyword)
+        private static string CaesarEditAlphabet(string keyword)
         {
             var word = new List<char>();
-            for (int i = 0; i < keyword.Length; i++)
+            foreach (var letter in keyword)
             {
-                if(!word.Contains(keyword[i]))
+                if(!word.Contains(letter))
                 {
-                word.Add(keyword[i]);
+                    word.Add(letter);
                 }
             }
 
             var lAlphabet = new List<char>();
-            for (int i = 0; i < alphabet.Length; i++)
+            foreach (var letter in Alphabet)
             {
-                lAlphabet.Add(alphabet[i]);
+                lAlphabet.Add(letter);
             }
             var selection = (from x in lAlphabet
                              where !word.Contains(x)
                              select x).ToArray();
-            string result = "";
-            foreach (char x in word)
+            var result = "";
+            foreach (var x in word)
             {
                 result = string.Concat(result, x.ToString());
             }
-            foreach (char x in selection)
-            {
-                 result = string.Concat(result, x.ToString());
-            }
-            
-            return result;
+
+            return selection.Aggregate(result, (current, x) => string.Concat(current, x.ToString()));
         }
     }
 
-    struct pair: IComparable<pair>
+    internal struct Pair: IComparable<Pair>
     {
-        public char letter;
-        public int counter;
+        public char Letter;
+        public int Counter;
 
-        public int CompareTo(pair obj)
+        public int CompareTo(Pair obj)
         {
-            return counter.CompareTo(obj.counter);
+            return Counter.CompareTo(obj.Counter);
         }
 
-        public static void Sort(List<pair> list)
+        public static void Sort(List<Pair> list)
         {
-            list.Sort((a, b) => a.counter.CompareTo(b.counter));
+            list.Sort((a, b) => b.Counter.CompareTo(a.Counter));
         }
     }
 }
