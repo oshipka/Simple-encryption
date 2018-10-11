@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace Data_protection
 {
@@ -76,7 +77,13 @@ namespace Data_protection
 
 		private void btnSaveFile_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			var dlg = new SaveFileDialog
+			{
+				Filter = "Text file (*.txt)|*.txt",
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+			};
+			if(dlg.ShowDialog() == true)
+				File.WriteAllText(dlg.FileName, OutputBox.Text);
 		}
 	}
 }
