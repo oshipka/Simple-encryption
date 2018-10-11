@@ -16,6 +16,7 @@
         <RadioButton x:Name="CaesarSelection" Content="Caesar" HorizontalAlignment="Left" Margin="28,309,0,0" VerticalAlignment="Top" IsChecked="True"/>
         <RadioButton x:Name="VigenerSelection" Content="Vigener" HorizontalAlignment="Left" Margin="28,341,0,0" VerticalAlignment="Top"/>
         <Button Content="Open file" HorizontalAlignment="Left" Margin="312,10,0,0" VerticalAlignment="Top" Width="75" Click="btnOpenFile_Click"/>
+        <Button Content="Save file" HorizontalAlignment="Left" Margin="403,10,0,0" VerticalAlignment="Top" Width="75" Click="btnSaveFile_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="28,10,0,0" TextWrapping="Wrap" Text="Open text file with text you want to cipher/decipher or enter your text in the field below" VerticalAlignment="Top" Width="270"/>
         <CheckBox x:Name="notBruteforce" Content="I know key/keyword for deciphering" HorizontalAlignment="Left" Margin="551,358,0,0" VerticalAlignment="Top"/>
 
