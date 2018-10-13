@@ -18,35 +18,35 @@ namespace Data_protection
 
 		private void Cipher_Button_Click(object sender, RoutedEventArgs e)
 		{
-            KeyInputBox.Visibility = System.Windows.Visibility.Visible;
-        }
+			KeyInputBox.Visibility = System.Windows.Visibility.Visible;
+		}
 
-        private void YesButton_Click(object sender, RoutedEventArgs e)
-        {
-            // YesButton Clicked! Let's hide our InputBox and handle the input text.
-            KeyInputBox.Visibility = System.Windows.Visibility.Collapsed;
+		private void YesButton_Click(object sender, RoutedEventArgs e)
+		{
+			// YesButton Clicked! Let's hide our InputBox and handle the input text.
+			KeyInputBox.Visibility = System.Windows.Visibility.Collapsed;
 
-            // Do something with the Input
-            String input = InputTextBox.Text;
-            //MyListBox.Items.Add(input); // Add Input to our ListBox.
+			// Do something with the Input
+			String input = KeyInput.Text;
+			//MyListBox.Items.Add(input); // Add Input to our ListBox.
 
-            // Clear InputBox.
-            InputTextBox.Text = String.Empty;
-        }
+			// Clear InputBox.
+			KeyInput.Text = String.Empty;
+		}
 
-        private void NoButton_Click(object sender, RoutedEventArgs e)
-        {
-            // NoButton Clicked! Let's hide our InputBox.
-            KeyInputBox.Visibility = System.Windows.Visibility.Collapsed;
+		private void NoButton_Click(object sender, RoutedEventArgs e)
+		{
+			// NoButton Clicked! Let's hide our InputBox.
+			KeyInputBox.Visibility = System.Windows.Visibility.Collapsed;
 
-            // Clear InputBox.
-            InputTextBox.Text = String.Empty;
-        }
+			// Clear InputBox.
+			KeyInput.Text = String.Empty;
+		}
 
-        private void Decipher_Button_Click(object sender, RoutedEventArgs e)
+		private void Decipher_Button_Click(object sender, RoutedEventArgs e)
 		{
 			
-        }
+		}
 
 		private async void btnOpenFile_Click(object sender, RoutedEventArgs e)
 		{
@@ -85,12 +85,12 @@ namespace Data_protection
 				File.WriteAllText(dlg.FileName, OutputBox.Text);
 		}
 
-        private void EnterKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == System.Windows.Input.Key.Enter)
-            {
-                InputBox.Text += Environment.NewLine;
-            }
-        }
-    }
+		private void EnterKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+		{
+			if (e.Key == System.Windows.Input.Key.Enter)
+			{
+				InputBox.Text += Environment.NewLine;
+			}
+		}
+	}
 }
