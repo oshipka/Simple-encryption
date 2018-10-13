@@ -15,8 +15,7 @@
 				Width="100" 
 				Height="35" 
 				AutomationProperties.HelpText="Click me" 
-				Click="Cipher_Button_Click"
-				KeyDown="EnterKeyDown"/>
+				Click="Cipher_Button_Click"/>
 		<Button x:Name="Decipher" 
 				Content="Decipher" 
 				HorizontalAlignment="Left" 
@@ -33,7 +32,9 @@
 				 Width="359" 
 				 IsReadOnlyCaretVisible="True" 
 				 IsManipulationEnabled="True" 
-				 SpellCheck.IsEnabled="True"/>
+				 SpellCheck.IsEnabled="True"
+		         KeyDown="EnterKeyDown"
+		         AcceptsReturn="True"/>
 		<TextBox x:Name="OutputBox" 
 				 HorizontalAlignment="Left" 
 				 Height="250" 
@@ -42,19 +43,6 @@
 				 Text="Your output text will be displayed here" 
 				 VerticalAlignment="Top" 
 				 Width="358"/>
-		<TextBox x:Name="Keyword" 
-				 HorizontalAlignment="Left" 
-				 Height="20" 
-				 Margin="403,308,0,0" 
-				 TextWrapping="Wrap" 
-				 Text="Keyword" 
-				 VerticalAlignment="Top" 
-				 Width="100" 
-				 TextOptions.TextFormattingMode="Display" 
-				 MaxLines="1" 
-				 MaxLength="32" 
-				 IsUndoEnabled="True" 
-				 TextAlignment="Center" />
 		<RadioButton x:Name="HillSelection" 
 					 Content="Hill method" 
 					 HorizontalAlignment="Left" 
@@ -66,32 +54,27 @@
 					 HorizontalAlignment="Left" 
 					 Margin="28,341,0,0" 
 					 VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" 
+				   Margin="28,10,0,0" 
+				   TextWrapping="Wrap" 
+				   Text="Open text file with text you want to cipher/decipher or enter your text in the field below" VerticalAlignment="Top" Width="270"/>
 		<Button Content="Open file" 
 				HorizontalAlignment="Left" 
 				Margin="312,10,0,0" 
 				VerticalAlignment="Top" 
 				Width="75" 
-				Click="btnOpenFile_Click"/>
+				Click="OpenFile"/>
 		<Button Content="Save file" 
 				HorizontalAlignment="Left" 
 				Margin="403,10,0,0" 
 				VerticalAlignment="Top" 
 				Width="75" 
-				Click="btnSaveFile_Click"/>
-		<TextBlock HorizontalAlignment="Left" 
-				   Margin="28,10,0,0" 
-				   TextWrapping="Wrap" 
-				   Text="Open text file with text you want to cipher/decipher or enter your text in the field below" VerticalAlignment="Top" Width="270"/>
-		<CheckBox x:Name="notBruteforce" 
-		          Content="I know key/keyword for deciphering" 
-		          HorizontalAlignment="Left" 
-		          Margin="551,358,0,0" 
-		          VerticalAlignment="Top"/>
+				Click="SaveFile"/>
 		<Grid x:Name="KeyInputBox" 
 		      Visibility="Collapsed">
 			<Grid Background="Black" Opacity="0.5"/>
 			<Border
-			MinWidth="250"
+			MinWidth="300"
 			Background="DarkSlateGray" 
 			BorderBrush="Black" 
 			BorderThickness="1" 
@@ -99,26 +82,42 @@
 			HorizontalAlignment="Center" 
 			VerticalAlignment="Center">
 				<StackPanel>
-					<TextBlock Margin="5" 
+					<TextBlock Margin="10" 
 					           Text="Your keyword:" 
 					           FontWeight="Bold" 
-					           FontFamily="Cambria" />
+					           FontFamily="Cambria"
+					           Foreground="Azure"/>
 					<TextBox MinWidth="150" 
 					         HorizontalAlignment="Center" 
 					         VerticalAlignment="Center" 
-					         x:Name="KeyInput"/>
+					         x:Name="KeyInput"
+					         Text = "{Binding Key, Mode = TwoWay}" d:DataContext="{d:DesignInstance }" />
 					<StackPanel Orientation="Horizontal"
 					            HorizontalAlignment="Center">
-						<Button x:Name="YesButton"
+					<RadioButton x:Name="LatinSelection" 
+					             Content="Latin alphabet" 
+					             HorizontalAlignment="Left" 
+					             VerticalAlignment="Top" 
+					             IsChecked="True"
+					             Foreground="Azure"/>
+					<RadioButton x:Name="CyrilicSelection" 
+					             Content="Cyrilic alphabet" 
+					             HorizontalAlignment="Left" 
+					             VerticalAlignment="Top"
+					             Foreground="Azure"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal"
+					            HorizontalAlignment="Center">
+						<Button x:Name="OkButton"
 						        Margin="5" 
-						        Content="Yes" 
-						        Background="{x:Null}" 
-						        Click="YesButton_Click"/>
-						<Button x:Name="NoButton" 
+						        Content="Ok" 
+						        Background="WhiteSmoke" 
+						        Click="Ok"/>
+						<Button x:Name="CancelButton" 
 						        Margin="5"
-						        Content="No"
-						        Background="{x:Null}"
-						        Click="NoButton_Click" />
+						        Content="Cancel"
+						        Background="WhiteSmoke"
+						        Click="Cancel" />
 					</StackPanel>
 				</StackPanel>
 			</Border>
