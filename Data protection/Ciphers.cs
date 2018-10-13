@@ -30,10 +30,6 @@ namespace Data_protection
                         
                         if(i<inputText.Length)
                         {
-                            /*if (!alphabet.Contains(inputText[i].ToString()))
-                            {
-                                toRemember = inputText[i].ToString();
-                            }*/
                             block += inputText[i];
                         }
                         else
@@ -65,9 +61,45 @@ namespace Data_protection
 
         public static class Decipher
         {
-            public static string HillMethod(string InputText, string Key, string alphabet)
+            public static string HillMethod(string inputText, string key, string alphabet)
             {
-                throw new System.NotImplementedException();
+                var blockLength = (int) Sqrt(key.Length);
+                var reverseKeyMatrix = Data_protection.Utils.ReverseMatrix(Utils.HKeyToMatrix(key, alphabet), alphabet.Length);
+                
+
+                inputText = inputText.Replace(' ', '_');
+                var result = "";
+                var position = 0;
+                while (position + blockLength < inputText.Length)
+                {
+                    var block = "";
+                    string toRemember = null;
+                    for (var i = position; i < position + blockLength; i++)
+                    {
+
+                        if (i < inputText.Length)
+                        {
+                            block += inputText[i];
+                        }
+                        else
+                        {
+                            block += " ";
+                        }
+                    }
+
+                    var blockVector = Utils.HBlockToVector(block, alphabet);
+                    var resultVector =
+                        Data_protection.Utils.MultiplyMatrices(reverseKeyMatrix, blockVector, alphabet.Length);
+                    for (var i = 0; i < blockLength; i++)
+                    {
+                        result += alphabet[resultVector[i][0]];
+                    }
+
+                    position += blockLength;
+                }
+
+                result = result.Replace('_', ' ');
+                return result;
             }
 
             public static string GammaMethod()
