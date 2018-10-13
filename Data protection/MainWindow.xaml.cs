@@ -18,36 +18,35 @@ namespace Data_protection
 
 		private void Cipher_Button_Click(object sender, RoutedEventArgs e)
 		{
-			var key = 0;
-			if(CaesarSelection.IsChecked == true)
-			{
-				int.TryParse(CaesarKey.Text, out key);
-			}
-			OutputBox.Text = Utils.Cipher(InputBox.Text, CaesarSelection.IsChecked, VigenerSelection.IsChecked, key, Keyword.Text);
-		}
+            KeyInputBox.Visibility = System.Windows.Visibility.Visible;
+        }
 
-		private void Decipher_Button_Click(object sender, RoutedEventArgs e)
+        private void YesButton_Click(object sender, RoutedEventArgs e)
+        {
+            // YesButton Clicked! Let's hide our InputBox and handle the input text.
+            KeyInputBox.Visibility = System.Windows.Visibility.Collapsed;
+
+            // Do something with the Input
+            String input = InputTextBox.Text;
+            //MyListBox.Items.Add(input); // Add Input to our ListBox.
+
+            // Clear InputBox.
+            InputTextBox.Text = String.Empty;
+        }
+
+        private void NoButton_Click(object sender, RoutedEventArgs e)
+        {
+            // NoButton Clicked! Let's hide our InputBox.
+            KeyInputBox.Visibility = System.Windows.Visibility.Collapsed;
+
+            // Clear InputBox.
+            InputTextBox.Text = String.Empty;
+        }
+
+        private void Decipher_Button_Click(object sender, RoutedEventArgs e)
 		{
-			var key = 0;
-			if (CaesarSelection.IsChecked == true && notBruteforce.IsChecked == true)
-			{
-				int.TryParse(CaesarKey.Text, out key);
-			}
-
-			if (!_triedBruteForce)
-			{
-				OutputBox.Text = Utils.Decipher(InputBox.Text, CaesarSelection.IsChecked, VigenerSelection.IsChecked, notBruteforce.IsChecked, key, Keyword.Text);
-				if (notBruteforce.IsChecked==false)
-				{
-					_triedBruteForce = true;
-				}
-			}
-
-			if (_triedBruteForce)
-			{
-				OutputBox.Text = Utils.Decipher(OutputBox.Text, CaesarSelection.IsChecked, VigenerSelection.IsChecked, notBruteforce.IsChecked, key, Keyword.Text);
-			}
-}
+			
+        }
 
 		private async void btnOpenFile_Click(object sender, RoutedEventArgs e)
 		{
@@ -85,5 +84,13 @@ namespace Data_protection
 			if(dlg.ShowDialog() == true)
 				File.WriteAllText(dlg.FileName, OutputBox.Text);
 		}
-	}
+
+        private void EnterKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                InputBox.Text += Environment.NewLine;
+            }
+        }
+    }
 }
