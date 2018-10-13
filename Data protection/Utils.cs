@@ -6,21 +6,27 @@ namespace Data_protection
 {
 	internal static class Utils
 	{
-		public const string EngAlphabet = "abcdefghijklmnopqrstuvwxyz.,\"()!?:-";
-		public const string CyrAlphabet = "абвгдеєжзиіїйклмнопрстуфхцчшщюяь.,\"()!?:-'";
+		public const string EngAlphabet = "abcdefghijklmnopqrstuvwxyz1234567890.,\"()!?:-_$";
+		public const string CyrAlphabet = "абвгдеєжзиіїйклмнопрстуфхцчшщюяь1234567890.,\"()!?:-'_";
 
 		public static int[][] ReverseMatrix(int[][] matrix, int mod)
 		{
+			if (matrix == null) throw new ArgumentNullException(nameof(matrix));
+			if (matrix.Length == 0) throw new ArgumentException(@"Value cannot be an empty collection.", nameof(matrix));
 			var result = new int[matrix.Length][];
 			var determinant = Determinant(matrix);
+			if (determinant.Equals(0))
+			{
+				throw new ArgumentException("Determinant is 0. Reverse matrix can not be found.");
+			}
 			determinant = ReverseElement((int)determinant, mod);
 			
-			for (int i = 0; i < matrix.Length; i++)
+			for (var i = 0; i < matrix.Length; i++)
 			{
 				result[i] = new int[matrix.Length];
-				for (int j = 0; j < matrix.Length; j++)
+				for (var j = 0; j < matrix.Length; j++)
 				{
-					result[i][j] = (int)((Math.Pow(-1, j + i) + Minor(matrix, j, i))*determinant);
+					result[i][j] = (int)((Math.Pow(-1, j + i) + Minor(matrix, j, i))*determinant)%mod;
 				}
 			}
 			return result;
@@ -38,11 +44,13 @@ namespace Data_protection
 
 		public static float Determinant(int[][] matrix)
 		{
+			if (matrix == null) throw new ArgumentNullException(nameof(matrix));
+			if (matrix.Length == 0) throw new ArgumentException(@"Value cannot be an empty collection.", nameof(matrix));
 			var m1 = new float[matrix.Length][];
-			for (var i = 0; i < matrix.Length - 1; i++)
+			for (var i = 0; i < matrix.Length; i++)
 			{
 				m1[i] = new float[matrix.Length];
-				for (var j = i + 1; j < matrix.Length - 1; j++)
+				for (var j = 0; j < matrix.Length; j++)
 				{
 					m1[i][j] = matrix[i][j];
 				}
@@ -83,18 +91,29 @@ namespace Data_protection
 			return (float) determinant;
 		}
 
-		public static int[][] MultiplyMatrices(int[][] matrixA, int[][] matrixB)
+		public static int[][] MultiplyMatrices(int[][] matrixA, int[][] matrixB, int mod)
 		{
+			if (matrixA == null) throw new ArgumentNullException(nameof(matrixA));
+			if (matrixA.Length == 0) throw new ArgumentException(@"Value cannot be an empty collection.", nameof(matrixA));
+			if (matrixB == null) throw new ArgumentNullException(nameof(matrixB));
+			if (matrixB.Length == 0) throw new ArgumentException(@"Value cannot be an empty collection.", nameof(matrixB));
+			if (matrixA[0].Length!=matrixB.Length)
+			{
+				throw new InvalidDataException("Attempted multiplying incompatible matrices");
+			}
+
 			var resultMatrix = new int[matrixA.Length][];
 			for (var i = 0; i < matrixA.Length; i++)
 			{
-				resultMatrix[i] = new int[matrixB.Length];
-				for (var j = 0; j < matrixA[0].Length; j++)
+				resultMatrix[i] = new int[matrixB[0].Length];
+				for (var j = 0; j < matrixB[0].Length; j++)
 				{
-					for (var k = 0; k < matrixB[0].Length; k++)
+					for (var k = 0; k < matrixB.Length; k++)
 					{
 						resultMatrix[i][j] += matrixA[i][k] * matrixB[k][j];
 					}
+
+					resultMatrix[i][j] = resultMatrix[i][j] % mod;
 				}
 			}
 
@@ -114,7 +133,7 @@ namespace Data_protection
 			}
 		}
 
-		private static int Gcd(int m, int n)
+		public static int Gcd(int m, int n)
 		{
 			while (true)
 			{

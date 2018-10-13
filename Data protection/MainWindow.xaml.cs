@@ -14,6 +14,7 @@ namespace Data_protection
 	{
 		private string _key;
 		private string _alphabet;
+		private bool _action;
 
 		public MainWindow()
 		{
@@ -22,28 +23,14 @@ namespace Data_protection
 
 		private void Cipher_Button_Click(object sender, RoutedEventArgs e)
 		{
-			KeyInputBox.Visibility = Visibility.Visible;/*
-			if (HillSelection.IsChecked == true)
-			{
-				Ciphers.Cipher.HillMethod();
-			}
-			else if (GammaSelection.IsChecked == true)
-			{
-				Ciphers.Cipher.GammaMethod();
-			}*/
+			_action = true;
+			KeyInputBox.Visibility = Visibility.Visible;
 		}
 
 		private void Decipher_Button_Click(object sender, RoutedEventArgs e)
 		{
+			_action = false;
 			KeyInputBox.Visibility = Visibility.Visible;
-			if (HillSelection.IsChecked == true)
-			{
-				Ciphers.Decipher.HillMethod();
-			}
-			else if (GammaSelection.IsChecked == true)
-			{
-				Ciphers.Decipher.GammaMethod();
-			}
 		}
 		
 		private void Ok(object sender, RoutedEventArgs e)
@@ -60,6 +47,38 @@ namespace Data_protection
 				_alphabet = Utils.CyrAlphabet;
 			}
 			KeyInput.Text = string.Empty;
+			
+			try
+			{
+				if (_action)
+				{
+					if (HillSelection.IsChecked == true)
+					{
+						OutputBox.Text = Ciphers.Cipher.HillMethod(InputBox.Text, _key, _alphabet);
+					}
+					else if (GammaSelection.IsChecked == true)
+					{
+						OutputBox.Text = Ciphers.Cipher.GammaMethod();
+					}
+				}
+
+				if (!_action)
+				{
+					if (HillSelection.IsChecked == true)
+					{
+						OutputBox.Text = Ciphers.Decipher.HillMethod(InputBox.Text, _key, _alphabet);
+					}
+					else if (GammaSelection.IsChecked == true)
+					{
+						OutputBox.Text = Ciphers.Decipher.GammaMethod();
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(exception.Message+ "\n" +exception.StackTrace, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				throw;
+			}
 		}
 
 		private void Cancel(object sender, RoutedEventArgs e)

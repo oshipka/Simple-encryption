@@ -1,4 +1,7 @@
-﻿namespace Data_protection
+﻿using System;
+using static System.Math;
+
+namespace Data_protection
 {
     public class Ciphers
     {
@@ -6,12 +9,55 @@
 
         public static class Cipher
         {
-            public static void HillMethod(string InputText, string Key, string alphabet)
+            public static string HillMethod(string inputText, string key, string alphabet)
             {
-                throw new System.NotImplementedException();
+                var blockLength = (int) Sqrt(key.Length);
+                var keyMatrix = Utils.HKeyToMatrix(key, alphabet);
+                if (Data_protection.Utils.Determinant(keyMatrix).Equals(0)||Data_protection.Utils.Gcd((int)Data_protection.Utils.Determinant(keyMatrix), alphabet.Length)!=1)
+                {
+                    throw new ArgumentException("Can not cipher with current key");
+                }
+
+                inputText = inputText.Replace(' ', '_');
+                var result = "";
+                var position = 0;
+                while (position + blockLength < inputText.Length)
+                {
+                    var block = "";
+                    string toRemember = null;
+                    for (var i = position; i < position + blockLength; i++)
+                    {
+                        
+                        if(i<inputText.Length)
+                        {
+                            /*if (!alphabet.Contains(inputText[i].ToString()))
+                            {
+                                toRemember = inputText[i].ToString();
+                            }*/
+                            block += inputText[i];
+                        }
+                        else
+                        {
+                            block += " ";
+                        }
+                    }
+
+                    var blockVector = Utils.HBlockToVector(block, alphabet);
+                    var resultVector =
+                        Data_protection.Utils.MultiplyMatrices(keyMatrix, blockVector, alphabet.Length);
+                    for (var i = 0; i < blockLength; i++)
+                    {
+                        result += alphabet[resultVector[i][0]];
+                    }
+
+                    position += blockLength;
+                }
+
+                result = result.Replace('_', ' ');
+            return result;
             }
 
-            public static void GammaMethod()
+            public static string GammaMethod()
             {
                 throw new System.NotImplementedException();
             }
@@ -19,14 +65,50 @@
 
         public static class Decipher
         {
-            public static void HillMethod()
+            public static string HillMethod(string InputText, string Key, string alphabet)
             {
                 throw new System.NotImplementedException();
             }
 
-            public static void GammaMethod()
+            public static string GammaMethod()
             {
                 throw new System.NotImplementedException();
+            }
+        }
+        
+        private static class Utils
+        {
+            public static int[][] HKeyToMatrix(string key, string alphabet)
+            {
+                var k = 0;
+                var result = new int[(int)Sqrt(key.Length)][];
+                for (var i = 0; i < result.Length; i++)
+                {
+                    result[i] = new int[result.Length];
+                    for (var j = 0; j < result.Length; j++)
+                    {
+                        result[i][j] = alphabet.IndexOf(key[k]);
+                        k++;
+                    }
+                }
+
+                return result;
+            }
+            
+            public static int[][] HBlockToVector(string block, string alphabet)
+            {
+                block = block.ToLower();
+                var result = new int[block.Length][];
+                for (var i = 0; i < result.Length; i++)
+                {
+                    result[i] = new int[1];
+                    for (var j = 0; j < 1; j++)
+                    {
+                        result[i][j] = alphabet.IndexOf(block[1]);
+                    }
+                }
+
+                return result;
             }
         }
     }
