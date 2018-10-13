@@ -10,23 +10,10 @@ namespace Data_protection
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow: INotifyPropertyChanged
+	public partial class MainWindow
 	{
-		private string key;
-		private string alphabet;
-
-		
-		public string Key
-		{
-			get { return key; }
-			set
-			{
-				if (key == value) return;
-				key = value;
-				OnPropertyChanged("KeyValue");
-			}
-		}
-		
+		private string _key;
+		private string _alphabet;
 
 		public MainWindow()
 		{
@@ -62,7 +49,16 @@ namespace Data_protection
 		private void Ok(object sender, RoutedEventArgs e)
 		{
 			KeyInputBox.Visibility = Visibility.Collapsed;
-			InputBox.Text = Key;
+			_key = KeyInput.Text;
+			if(LatinSelection.IsChecked == true)
+			{
+				_alphabet = Utils.EngAlphabet;
+			}
+
+			if (CyrilicSelection.IsChecked == true)
+			{
+				_alphabet = Utils.CyrAlphabet;
+			}
 			KeyInput.Text = string.Empty;
 		}
 
@@ -116,13 +112,6 @@ namespace Data_protection
 			{
 				InputBox.Text = InputBox.Text + "\n";
 			}
-		}
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		private void OnPropertyChanged(string info)
-		{
-			var handler = PropertyChanged;
-			handler?.Invoke(this, new PropertyChangedEventArgs(info));
 		}
 	}
 }

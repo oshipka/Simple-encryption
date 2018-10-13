@@ -6,12 +6,23 @@ namespace Data_protection
 {
 	internal static class Utils
 	{
-		private const string EngAlphabet = "abcdefghijklmnopqrstuvwxyz.,\"()!?:-";
-		private const string CyrAlphabet = "абвгдеєжзиіїйклмнопрстуфхцчшщюяь.,\"()!?:-'";
+		public const string EngAlphabet = "abcdefghijklmnopqrstuvwxyz.,\"()!?:-";
+		public const string CyrAlphabet = "абвгдеєжзиіїйклмнопрстуфхцчшщюяь.,\"()!?:-'";
 
 		public static int[][] ReverseMatrix(int[][] matrix, int mod)
 		{
-			int[][] result;
+			var result = new int[matrix.Length][];
+			var determinant = Determinant(matrix);
+			determinant = ReverseElement((int)determinant, mod);
+			
+			for (int i = 0; i < matrix.Length; i++)
+			{
+				result[i] = new int[matrix.Length];
+				for (int j = 0; j < matrix.Length; j++)
+				{
+					result[i][j] = (int)((Math.Pow(-1, j + i) + Minor(matrix, j, i))*determinant);
+				}
+			}
 			return result;
 		}
 
