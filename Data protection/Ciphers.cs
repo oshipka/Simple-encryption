@@ -6,7 +6,7 @@
 
         public static class Cipher
         {
-            public static void HillMethod()
+            public static void HillMethod(string InputText, string Key, string alphabet)
             {
                 throw new System.NotImplementedException();
             }
