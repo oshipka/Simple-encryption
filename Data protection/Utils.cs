@@ -216,5 +216,11 @@ namespace Data_protection
             var result = Math.Sqrt(number);
             return Math.Abs(result%1) < 0.0000001;
         }
+
+        public static bool HasThreeNumbers(string keyInputText)
+        {
+            var numbers = keyInputText.Split(' ');
+            return numbers.Length == 3;
+        }
     }
 }

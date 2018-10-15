@@ -35,14 +35,24 @@ namespace Data_protection
 
 		private void Ok(object sender, RoutedEventArgs e)
 		{
-			if ((!Utils.IsSquare(KeyInput.Text.Length) ||
-			    KeyInput.Text.Length < 9) &&
-			    HillSelection.IsChecked == true)
+			if (HillSelection.IsChecked == true && 
+			    (!Utils.IsSquare(KeyInput.Text.Length) ||
+			     KeyInput.Text.Length < 9)
+			)
 			{
 				KeyInputBox.Visibility = Visibility.Visible;
 				MessageBox.Show("Your key walue was of not accepted length.\n" +
 				                "Accepted lengths are perfect squares, bigger than 4\n" +
 				                "e.g. 9 16 25 36 48 64 81 100 etc", "You did wrong", MessageBoxButton.OK,
+					MessageBoxImage.Information);
+			}
+			if (GammaSelection.IsChecked == true && 
+			      !Utils.HasThreeNumbers(KeyInput.Text)
+			)
+			{
+				KeyInputBox.Visibility = Visibility.Visible;
+				MessageBox.Show("Your key walue was of not accepted length.\n" +
+				                "Accepted length is 3", "You did wrong", MessageBoxButton.OK,
 					MessageBoxImage.Information);
 			}
 			else
@@ -71,7 +81,7 @@ namespace Data_protection
 						}
 						else if (GammaSelection.IsChecked == true)
 						{
-							OutputBox.Text = Ciphers.Cipher.GammaMethod();
+							OutputBox.Text = Ciphers.Cipher.GammaMethod(InputBox.Text, _key, _alphabet);
 						}
 					}
 
@@ -83,7 +93,7 @@ namespace Data_protection
 						}
 						else if (GammaSelection.IsChecked == true)
 						{
-							OutputBox.Text = Ciphers.Decipher.GammaMethod();
+							OutputBox.Text = Ciphers.Decipher.GammaMethod(InputBox.Text, _key, _alphabet);
 						}
 					}
 				}
