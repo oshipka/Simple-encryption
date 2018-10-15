@@ -166,58 +166,6 @@ namespace Data_protection
             }
 
             return Math.Abs(m);
-            /*while (true)
-            {
-                if (m == 0)
-                {
-                    return n;
-                }
-
-                if (n == 0)
-                {
-                    return m;
-                }
-
-                if (m == 1 || n == 1)
-                {
-                    return 1;
-                }
-
-                if (m % 2 == 0 && n % 2 == 0)
-                {
-                    return 2 * Gcd(m / 2, n / 2);
-                }
-
-                if (m % 2 == 0 && n % 2 == 1)
-                {
-                    m = m / 2;
-                    continue;
-                }
-
-                if (m % 2 == 1 && n % 2 == 0)
-                {
-                    n = n / 2;
-                    continue;
-                }
-
-                if (m % 2 == 1 && n % 2 == 1 && n > m)
-                {
-                    var m1 = m;
-                    m = (n - m) / 2;
-                    n = m1;
-                    continue;
-                }
-
-                if (m % 2 == 1 && n % 2 == 1 && m > n)
-                {
-                    m = (m - n) / 2;
-                    continue;
-                }
-
-                
-            }*/
-            throw new InvalidDataException("Error while calculating greatest comon divisor for m:" + m + " n: " + n);
-
         }
 
         private static float Minor(int[][] matrix, int i, int j)
@@ -261,6 +209,12 @@ namespace Data_protection
             }
 
             return Determinant(minorMatrix);
+        }
+
+        public static bool IsSquare(int number)
+        {
+            var result = Math.Sqrt(number);
+            return Math.Abs(result%1) < 0.0000001;
         }
     }
 }

@@ -32,53 +32,70 @@ namespace Data_protection
 			_action = false;
 			KeyInputBox.Visibility = Visibility.Visible;
 		}
-		
+
 		private void Ok(object sender, RoutedEventArgs e)
 		{
-			KeyInputBox.Visibility = Visibility.Collapsed;
-			_key = KeyInput.Text;
-			if(LatinSelection.IsChecked == true)
+			if ((!Utils.IsSquare(KeyInput.Text.Length) ||
+			    KeyInput.Text.Length < 9) &&
+			    HillSelection.IsChecked == true)
 			{
-				_alphabet = Utils.EngAlphabet;
+				KeyInputBox.Visibility = Visibility.Visible;
+				MessageBox.Show("Your key walue was of not accepted length.\n" +
+				                "Accepted lengths are perfect squares, bigger than 4\n" +
+				                "e.g. 9 16 25 36 48 64 81 100 etc", "You did wrong", MessageBoxButton.OK,
+					MessageBoxImage.Information);
 			}
-
-			if (CyrilicSelection.IsChecked == true)
+			else
 			{
-				_alphabet = Utils.CyrAlphabet;
-			}
-			KeyInput.Text = string.Empty;
-			
-			try
-			{
-				if (_action)
+				KeyInputBox.Visibility = Visibility.Collapsed;
+				_key = KeyInput.Text;
+				if (LatinSelection.IsChecked == true)
 				{
-					if (HillSelection.IsChecked == true)
-					{
-						OutputBox.Text = Ciphers.Cipher.HillMethod(InputBox.Text, _key, _alphabet);
-					}
-					else if (GammaSelection.IsChecked == true)
-					{
-						OutputBox.Text = Ciphers.Cipher.GammaMethod();
-					}
+					_alphabet = Utils.EngAlphabet;
 				}
 
-				if (!_action)
+				if (CyrilicSelection.IsChecked == true)
 				{
-					if (HillSelection.IsChecked == true)
+					_alphabet = Utils.CyrAlphabet;
+				}
+
+				KeyInput.Text = string.Empty;
+
+				try
+				{
+					if (_action)
 					{
-						OutputBox.Text = Ciphers.Decipher.HillMethod(InputBox.Text, _key, _alphabet);
+						if (HillSelection.IsChecked == true)
+						{
+							OutputBox.Text = Ciphers.Cipher.HillMethod(InputBox.Text, _key, _alphabet);
+						}
+						else if (GammaSelection.IsChecked == true)
+						{
+							OutputBox.Text = Ciphers.Cipher.GammaMethod();
+						}
 					}
-					else if (GammaSelection.IsChecked == true)
+
+					if (!_action)
 					{
-						OutputBox.Text = Ciphers.Decipher.GammaMethod();
+						if (HillSelection.IsChecked == true)
+						{
+							OutputBox.Text = Ciphers.Decipher.HillMethod(InputBox.Text, _key, _alphabet);
+						}
+						else if (GammaSelection.IsChecked == true)
+						{
+							OutputBox.Text = Ciphers.Decipher.GammaMethod();
+						}
 					}
 				}
+				catch (Exception exception)
+				{
+					MessageBox.Show(exception.Message + "\n" + exception.StackTrace, "Error", MessageBoxButton.OK,
+						MessageBoxImage.Error);
+					throw;
+				}
+
 			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(exception.Message+ "\n" +exception.StackTrace, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				throw;
-			}
+
 		}
 
 		private void Cancel(object sender, RoutedEventArgs e)
