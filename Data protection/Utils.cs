@@ -28,7 +28,11 @@ namespace Data_protection
                 result[i] = new int[matrix.Length];
                 for (var j = 0; j < matrix.Length; j++)
                 {
-                    result[i][j] = (int) ((Math.Pow(-1, j + i) + Minor(matrix, j, i)) * determinant) % mod;
+                    result[i][j] = (int) ((Math.Pow(-1, j + i) * Minor(matrix, j, i)) * determinant) % mod;
+                    while (result[i][j]<0)
+                    {
+                        result[i][j] += mod;
+                    }
                 }
             }
 
@@ -43,15 +47,19 @@ namespace Data_protection
                                                mod.ToString());
             }
 
-            if (element < 0)
+            while (element < 0)
             {
-                while (element < 0)
-                {
-                    element += mod;
-                }
+                element += mod;
             }
 
-            return (mod + 1) / element;
+            var n = 1;
+            float result = (n*mod+1 )/ (float)element;
+            while (result!=Math.Floor(result))
+            {
+                n++;
+                result = (n * mod + 1) / (float)element;
+            }
+            return (int)result;
         }
 
         public static float Determinant(int[][] matrix)

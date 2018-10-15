@@ -136,7 +136,7 @@ namespace Data_protection
                     result[i] = new int[1];
                     for (var j = 0; j < 1; j++)
                     {
-                        result[i][j] = alphabet.IndexOf(block[1]);
+                        result[i][j] = alphabet.IndexOf(block[i]);
                     }
                 }
 
