@@ -39,17 +39,6 @@
 				 Text="Your output text will be displayed here" 
 				 VerticalAlignment="Top" 
 				 Width="358"/>
-		<RadioButton x:Name="HillSelection" 
-					 Content="Hill method" 
-					 HorizontalAlignment="Left" 
-					 Margin="28,309,0,0" 
-					 VerticalAlignment="Top" 
-					 IsChecked="True"/>
-		<RadioButton x:Name="GammaSelection" 
-					 Content="Gamma method" 
-					 HorizontalAlignment="Left" 
-					 Margin="28,341,0,0" 
-					 VerticalAlignment="Top"/>
 		<TextBlock HorizontalAlignment="Left" 
 				   Margin="28,10,0,0" 
 				   TextWrapping="Wrap" 

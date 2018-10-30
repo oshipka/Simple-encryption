@@ -12,7 +12,7 @@ namespace Data_protection
 	/// </summary>
 	public partial class MainWindow
 	{
-		private string _key;
+		private int[] _key = new int[2];
 		private string _alphabet;
 		private bool _action;
 
@@ -35,76 +35,40 @@ namespace Data_protection
 
 		private void Ok(object sender, RoutedEventArgs e)
 		{
-			if (HillSelection.IsChecked == true && 
-			    (!Utils.IsSquare(KeyInput.Text.Length) ||
-			     KeyInput.Text.Length < 9)
-			)
+
+			KeyInputBox.Visibility = Visibility.Collapsed;
+			try
+			{
+				_key = Utils.GetNumbers(KeyInput.Text);
+			}
+			catch (Exception exception)
 			{
 				KeyInputBox.Visibility = Visibility.Visible;
-				MessageBox.Show("Your key walue was of not accepted length.\n" +
-				                "Accepted lengths are perfect squares, bigger than 4\n" +
-				                "e.g. 9 16 25 36 48 64 81 100 etc", "You did wrong", MessageBoxButton.OK,
-					MessageBoxImage.Information);
+				MessageBox.Show(exception.Message + "\n" + exception.StackTrace, "Error", MessageBoxButton.OK,
+					MessageBoxImage.Error);
 			}
-			if (GammaSelection.IsChecked == true && 
-			      !Utils.HasThreeNumbers(KeyInput.Text)
-			)
+
+			try
 			{
-				KeyInputBox.Visibility = Visibility.Visible;
-				MessageBox.Show("Your key walue was of not accepted length.\n" +
-				                "Accepted length is 3", "You did wrong", MessageBoxButton.OK,
-					MessageBoxImage.Information);
+				if (_action)
+				{
+					OutputBox.Text = Ciphers.Cipher.BBSMethod(InputBox.Text, _key, out var seed);
+					MessageBox.Show("This is your seed. Remember it for the deciphering\n" + seed, "Information", MessageBoxButton.OK,
+						MessageBoxImage.Information);
+				}
+
+				if (!_action)
+				{
+					OutputBox.Text = Ciphers.Decipher.BBSMethod(InputBox.Text, _key);
+				}
 			}
-			else
+			catch (Exception exception)
 			{
-				KeyInputBox.Visibility = Visibility.Collapsed;
-				_key = KeyInput.Text;
-				if (LatinSelection.IsChecked == true)
-				{
-					_alphabet = Utils.EngAlphabet;
-				}
-
-				if (CyrilicSelection.IsChecked == true)
-				{
-					_alphabet = Utils.CyrAlphabet;
-				}
-
-				KeyInput.Text = string.Empty;
-
-				try
-				{
-					if (_action)
-					{
-						if (HillSelection.IsChecked == true)
-						{
-							OutputBox.Text = Ciphers.Cipher.HillMethod(InputBox.Text, _key, _alphabet);
-						}
-						else if (GammaSelection.IsChecked == true)
-						{
-							OutputBox.Text = Ciphers.Cipher.GammaMethod(InputBox.Text, _key, _alphabet);
-						}
-					}
-
-					if (!_action)
-					{
-						if (HillSelection.IsChecked == true)
-						{
-							OutputBox.Text = Ciphers.Decipher.HillMethod(InputBox.Text, _key, _alphabet);
-						}
-						else if (GammaSelection.IsChecked == true)
-						{
-							OutputBox.Text = Ciphers.Decipher.GammaMethod(InputBox.Text, _key, _alphabet);
-						}
-					}
-				}
-				catch (Exception exception)
-				{
-					MessageBox.Show(exception.Message + "\n" + exception.StackTrace, "Error", MessageBoxButton.OK,
-						MessageBoxImage.Error);
-					throw;
-				}
-
+				MessageBox.Show(exception.Message + "\n" + exception.StackTrace, "Error", MessageBoxButton.OK,
+					MessageBoxImage.Error);
 			}
+
+
 
 		}
 
