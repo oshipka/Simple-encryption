@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Data_protection"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <Color x:Key="LabelColour">#FFF6E1FF</Color>
+
     </Application.Resources>
 </Application>

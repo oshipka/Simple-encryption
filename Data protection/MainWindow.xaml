@@ -1,111 +1,75 @@
 ﻿<Window x:Class="Data_protection.MainWindow"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		Title="Ciphering program" Height="416.479" Width="800">
-	<Grid>
-		<Button x:Name="Cipher" 
-				Content="Cipher" 
-				HorizontalAlignment="Left" 
-				Margin="556,318,0,0" 
-				VerticalAlignment="Top" 
-				Width="100" 
-				Height="35" 
-				AutomationProperties.HelpText="Click me" 
-				Click="Cipher_Button_Click"/>
-		<Button x:Name="Decipher" 
-				Content="Decipher" 
-				HorizontalAlignment="Left" 
-				Margin="661,318,0,0" 
-				VerticalAlignment="Top" 
-				Width="100" Height="35" 
-				Click="Decipher_Button_Click"/>
-		<TextBox x:Name="InputBox" 
-				 HorizontalAlignment="Left" 
-				 Height="250" Margin="28,47,0,0" 
-				 TextWrapping="Wrap" 
-				 Text="Input text you want to cipher here" 
-				 VerticalAlignment="Top" 
-				 Width="359" 
-				 IsReadOnlyCaretVisible="True" 
-				 IsManipulationEnabled="True" 
-				 SpellCheck.IsEnabled="True"
-		         KeyDown="EnterKeyDown"
-		         AcceptsReturn="True"/>
-		<TextBox x:Name="OutputBox" 
-				 HorizontalAlignment="Left" 
-				 Height="250" 
-				 Margin="403,47,0,0" 
-				 TextWrapping="Wrap" 
-				 Text="Your output text will be displayed here" 
-				 VerticalAlignment="Top" 
-				 Width="358"/>
-		<TextBlock HorizontalAlignment="Left" 
-				   Margin="28,10,0,0" 
-				   TextWrapping="Wrap" 
-				   Text="Open text file with text you want to cipher/decipher or enter your text in the field below" VerticalAlignment="Top" Width="270"/>
-		<Button Content="Open file" 
-				HorizontalAlignment="Left" 
-				Margin="312,10,0,0" 
-				VerticalAlignment="Top" 
-				Width="75" 
-				Click="OpenFile"/>
-		<Button Content="Save file" 
-				HorizontalAlignment="Left" 
-				Margin="403,10,0,0" 
-				VerticalAlignment="Top" 
-				Width="75" 
-				Click="SaveFile"/>
-		<Grid x:Name="KeyInputBox" 
-		      Visibility="Collapsed">
-			<Grid Background="Black" Opacity="0.5"/>
-			<Border
-			MinWidth="300"
-			Background="DarkSlateGray" 
-			BorderBrush="Black" 
-			BorderThickness="1" 
-			CornerRadius="30,30,30,30" 
-			HorizontalAlignment="Center" 
-			VerticalAlignment="Center">
-				<StackPanel>
-					<TextBlock Margin="10" 
-					           Text="Your keyword:" 
-					           FontWeight="Bold" 
-					           FontFamily="Cambria"
-					           Foreground="Azure"/>
-					<TextBox MinWidth="150" 
-					         HorizontalAlignment="Center" 
-					         VerticalAlignment="Center" 
-					         x:Name="KeyInput"/>
-					<StackPanel Orientation="Horizontal"
-					            HorizontalAlignment="Center">
-					<RadioButton x:Name="LatinSelection" 
-					             Content="Latin alphabet" 
-					             HorizontalAlignment="Left" 
-					             VerticalAlignment="Top" 
-					             IsChecked="True"
-					             Foreground="Azure"/>
-					<RadioButton x:Name="CyrilicSelection" 
-					             Content="Cyrilic alphabet" 
-					             HorizontalAlignment="Left" 
-					             VerticalAlignment="Top"
-					             Foreground="Azure"/>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal"
-					            HorizontalAlignment="Center">
-						<Button x:Name="OkButton"
-						        Margin="5" 
-						        Content="Ok" 
-						        Background="WhiteSmoke" 
-						        Click="Ok"/>
-						<Button x:Name="CancelButton" 
-						        Margin="5"
-						        Content="Cancel"
-						        Background="WhiteSmoke"
-						        Click="Cancel" />
-					</StackPanel>
-				</StackPanel>
-			</Border>
-		</Grid>
-
-	</Grid>
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Data_protection"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="510" Width="450">
+    <Grid Background="#FFB9A3C3" Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto" MinWidth="81"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="p" HorizontalAlignment="Center" Margin="23,23,28,23" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="38" Grid.Column="1" HorizontalContentAlignment="Center"/>
+        <Label x:Name="kpLabel" Content="Label" HorizontalAlignment="Center" Margin="0,17,0,16" Grid.Row="4" VerticalAlignment="Center" Grid.Column="4" Height="26" Width="36">
+            <Label.Background>
+                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="YLabel" Content="Label" HorizontalAlignment="Center" Margin="0,18,0,19" Grid.Row="3" VerticalAlignment="Center" Grid.Column="4" Height="26" Width="36">
+            <Label.Background>
+                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
+            </Label.Background>
+        </Label>
+        <Label Content="Calculated k'" HorizontalAlignment="Center" Margin="0,17,0,16" Grid.Row="4" VerticalAlignment="Center" Grid.Column="3" Height="26"/>
+        <Label Content="Calculated Y" HorizontalAlignment="Center" Margin="0,18,0,19" Grid.Row="3" VerticalAlignment="Center" Grid.Column="3" Height="26"/>
+        <Label x:Name="kLabel" Content="Label" HorizontalAlignment="Center" Margin="0" Grid.Row="4" VerticalAlignment="Center" Grid.Column="2" Height="26" Width="34">
+            <Label.Background>
+                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="XLabel" Content="Label" HorizontalAlignment="Center" Margin="0" Grid.Row="3" VerticalAlignment="Center" Grid.Column="2" Height="26" Width="34">
+            <Label.Background>
+                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
+            </Label.Background>
+        </Label>
+        <Label Content="Calculated k" HorizontalAlignment="Center" Margin="0,17,0,16" Grid.Row="4" VerticalAlignment="Center" Height="26" Grid.Column="1"/>
+        <Label Content="Calculated X" HorizontalAlignment="Center" Margin="0,18,0,19" Grid.Row="3" VerticalAlignment="Center" Height="26" Grid.Column="1"/>
+        <Label x:Name="BLabel" Content="Label" HorizontalAlignment="Center" Margin="0,16" Grid.Row="2" VerticalAlignment="Center" Grid.Column="4" Height="26" Width="36">
+            <Label.Background>
+                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
+            </Label.Background>
+        </Label>
+        <Label x:Name="aLabel" Content="Label" HorizontalAlignment="Center" Margin="0,23" Grid.Row="1" VerticalAlignment="Center" Grid.Column="4" Height="26" Width="36">
+            <Label.Background>
+                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
+            </Label.Background>
+        </Label>
+        <Label Content="a" HorizontalAlignment="Center" Margin="0,23" Grid.Row="1" VerticalAlignment="Center" Grid.Column="3" Height="26" Width="38" HorizontalContentAlignment="Center"/>
+        <Label Content="Random B's number" HorizontalAlignment="Center" Margin="0,16" Grid.Row="2" VerticalAlignment="Center" Grid.Column="3" Height="26"/>
+        <Label x:Name="ALabel" Content="Label" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Center" Grid.Column="2" Height="26" Width="34">
+            <Label.Background>
+                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
+            </Label.Background>
+        </Label>
+        <Label Content="Random A's number" HorizontalAlignment="Center" Margin="0,16" Grid.Row="2" VerticalAlignment="Center" Height="26" Grid.Column="1"/>
+        <Label x:Name="pLabel" Content="Label" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Grid.Column="2" Height="26" Width="34">
+            <Label.Background>
+                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
+            </Label.Background>
+        </Label>
+    </Grid>
 </Window>
