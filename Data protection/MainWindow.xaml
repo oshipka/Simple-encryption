@@ -6,70 +6,217 @@
         xmlns:local="clr-namespace:Data_protection"
         mc:Ignorable="d"
         Title="MainWindow" Height="510" Width="450">
-    <Grid Background="#FFB9A3C3" Margin="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="Auto" MinWidth="81"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Label Content="p" HorizontalAlignment="Center" Margin="23,23,28,23" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="38" Grid.Column="1" HorizontalContentAlignment="Center"/>
-        <Label x:Name="kpLabel" Content="Label" HorizontalAlignment="Center" Margin="0,17,0,16" Grid.Row="4" VerticalAlignment="Center" Grid.Column="4" Height="26" Width="36">
-            <Label.Background>
-                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
-            </Label.Background>
-        </Label>
-        <Label x:Name="YLabel" Content="Label" HorizontalAlignment="Center" Margin="0,18,0,19" Grid.Row="3" VerticalAlignment="Center" Grid.Column="4" Height="26" Width="36">
-            <Label.Background>
-                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
-            </Label.Background>
-        </Label>
-        <Label Content="Calculated k'" HorizontalAlignment="Center" Margin="0,17,0,16" Grid.Row="4" VerticalAlignment="Center" Grid.Column="3" Height="26"/>
-        <Label Content="Calculated Y" HorizontalAlignment="Center" Margin="0,18,0,19" Grid.Row="3" VerticalAlignment="Center" Grid.Column="3" Height="26"/>
-        <Label x:Name="kLabel" Content="Label" HorizontalAlignment="Center" Margin="0" Grid.Row="4" VerticalAlignment="Center" Grid.Column="2" Height="26" Width="34">
-            <Label.Background>
-                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
-            </Label.Background>
-        </Label>
-        <Label x:Name="XLabel" Content="Label" HorizontalAlignment="Center" Margin="0" Grid.Row="3" VerticalAlignment="Center" Grid.Column="2" Height="26" Width="34">
-            <Label.Background>
-                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
-            </Label.Background>
-        </Label>
-        <Label Content="Calculated k" HorizontalAlignment="Center" Margin="0,17,0,16" Grid.Row="4" VerticalAlignment="Center" Height="26" Grid.Column="1"/>
-        <Label Content="Calculated X" HorizontalAlignment="Center" Margin="0,18,0,19" Grid.Row="3" VerticalAlignment="Center" Height="26" Grid.Column="1"/>
-        <Label x:Name="BLabel" Content="Label" HorizontalAlignment="Center" Margin="0,16" Grid.Row="2" VerticalAlignment="Center" Grid.Column="4" Height="26" Width="36">
-            <Label.Background>
-                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
-            </Label.Background>
-        </Label>
-        <Label x:Name="aLabel" Content="Label" HorizontalAlignment="Center" Margin="0,23" Grid.Row="1" VerticalAlignment="Center" Grid.Column="4" Height="26" Width="36">
-            <Label.Background>
-                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
-            </Label.Background>
-        </Label>
-        <Label Content="a" HorizontalAlignment="Center" Margin="0,23" Grid.Row="1" VerticalAlignment="Center" Grid.Column="3" Height="26" Width="38" HorizontalContentAlignment="Center"/>
-        <Label Content="Random B's number" HorizontalAlignment="Center" Margin="0,16" Grid.Row="2" VerticalAlignment="Center" Grid.Column="3" Height="26"/>
-        <Label x:Name="ALabel" Content="Label" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Center" Grid.Column="2" Height="26" Width="34">
-            <Label.Background>
-                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
-            </Label.Background>
-        </Label>
-        <Label Content="Random A's number" HorizontalAlignment="Center" Margin="0,16" Grid.Row="2" VerticalAlignment="Center" Height="26" Grid.Column="1"/>
-        <Label x:Name="pLabel" Content="Label" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Grid.Column="2" Height="26" Width="34">
-            <Label.Background>
-                <SolidColorBrush Color="{DynamicResource LabelColour}"/>
-            </Label.Background>
-        </Label>
-    </Grid>
+	<Grid Background="#FFB9A3C3" Margin="0">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="120" />
+			<RowDefinition Height="70" />
+			<RowDefinition Height="70" />
+			<RowDefinition Height="70" />
+			<RowDefinition Height="70" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="20" />
+			<ColumnDefinition Width="Auto" MinWidth="81" />
+			<ColumnDefinition Width="100" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="100" />
+			<ColumnDefinition Width="20" />
+		</Grid.ColumnDefinitions>
+		<Label
+			Content="p"
+			HorizontalAlignment="Center"
+			Margin="23,23,28,23"
+			Grid.Row="1"
+			VerticalAlignment="Center"
+			Height="26"
+			Width="38"
+			Grid.Column="1"
+			HorizontalContentAlignment="Center" />
+		<Label
+			x:Name="kpLabel"
+			Content="Label"
+			HorizontalAlignment="Center"
+			Margin="0,17,0,16" Grid.Row="4"
+			VerticalAlignment="Center"
+			Grid.Column="4"
+			Height="26"
+			Width="36">
+			<Label.Background>
+				<SolidColorBrush Color="{DynamicResource LabelColour}" />
+			</Label.Background>
+		</Label>
+		<Label
+			x:Name="YLabel"
+			Content="Label"
+			HorizontalAlignment="Center"
+			Margin="0,18,0,19"
+			Grid.Row="3"
+			VerticalAlignment="Center"
+			Grid.Column="4"
+			Height="26"
+			Width="36">
+			<Label.Background>
+				<SolidColorBrush
+					Color="{DynamicResource LabelColour}" />
+			</Label.Background>
+		</Label>
+		<Label
+			Content="Calculated k'"
+			HorizontalAlignment="Center"
+			Margin="0,17,0,16"
+			Grid.Row="4"
+			VerticalAlignment="Center"
+			Grid.Column="3"
+			Height="26" />
+		<Label
+			Content="Calculated Y"
+			HorizontalAlignment="Center"
+			Margin="0,18,0,19"
+			Grid.Row="3"
+			VerticalAlignment="Center"
+			Grid.Column="3"
+			Height="26" />
+		<Label
+			x:Name="kLabel"
+			Content="Label"
+			HorizontalAlignment="Center"
+			Margin="0"
+			Grid.Row="4"
+			VerticalAlignment="Center"
+			Grid.Column="2"
+			Height="26"
+			Width="34">
+			<Label.Background>
+				<SolidColorBrush
+					Color="{DynamicResource LabelColour}" />
+			</Label.Background>
+		</Label>
+		<Label
+			x:Name="XLabel"
+			Content="Label"
+			HorizontalAlignment="Center"
+			Margin="0"
+			Grid.Row="3"
+			VerticalAlignment="Center"
+			Grid.Column="2"
+			Height="26"
+			Width="34">
+			<Label.Background>
+				<SolidColorBrush
+					Color="{DynamicResource LabelColour}" />
+			</Label.Background>
+		</Label>
+		<Label
+			Content="Calculated k"
+			HorizontalAlignment="Center"
+			Margin="0,17,0,16"
+			Grid.Row="4"
+			VerticalAlignment="Center"
+			Height="26"
+			Grid.Column="1" />
+		<Label
+			Content="Calculated X"
+			HorizontalAlignment="Center"
+			Margin="0,18,0,19" Grid.Row="3"
+			VerticalAlignment="Center"
+			Height="26"
+			Grid.Column="1" />
+		<Label
+			x:Name="BLabel"
+			Content="Label"
+			HorizontalAlignment="Center"
+			Margin="0,16"
+			Grid.Row="2"
+			VerticalAlignment="Center"
+			Grid.Column="4"
+			Height="26"
+			Width="36">
+			<Label.Background>
+				<SolidColorBrush
+					Color="{DynamicResource LabelColour}" />
+			</Label.Background>
+		</Label>
+		<Label
+			x:Name="aLabel"
+			Content="Label"
+			HorizontalAlignment="Center"
+			Margin="0,23"
+			Grid.Row="1"
+			VerticalAlignment="Center"
+			Grid.Column="4"
+			Height="26"
+			Width="36">
+			<Label.Background>
+				<SolidColorBrush
+					Color="{DynamicResource LabelColour}" />
+			</Label.Background>
+		</Label>
+		<Label
+			Content="a"
+			HorizontalAlignment="Center"
+			Margin="0,23"
+			Grid.Row="1"
+			VerticalAlignment="Center"
+			Grid.Column="3"
+			Height="26"
+			Width="38"
+			HorizontalContentAlignment="Center" />
+		<Label
+			Content="Random B's number"
+			HorizontalAlignment="Center"
+			Margin="0,16"
+			Grid.Row="2"
+			VerticalAlignment="Center"
+			Grid.Column="3"
+			Height="26" />
+		<Label
+			x:Name="ALabel"
+			Content="Label"
+			HorizontalAlignment="Center"
+			Margin="0"
+			Grid.Row="2"
+			VerticalAlignment="Center"
+			Grid.Column="2"
+			Height="26"
+			Width="34">
+			<Label.Background>
+				<SolidColorBrush
+					Color="{DynamicResource LabelColour}" />
+			</Label.Background>
+		</Label>
+		<Label
+			Content="Random A's number"
+			HorizontalAlignment="Center"
+			Margin="0,16" Grid.Row="2"
+			VerticalAlignment="Center"
+			Height="26"
+			Grid.Column="1" />
+		<Label
+			x:Name="pLabel"
+			Content="Label"
+			HorizontalAlignment="Center"
+			Margin="0"
+			Grid.Row="1"
+			VerticalAlignment="Center"
+			Grid.Column="2"
+			Height="26"
+			Width="34">
+			<Label.Background>
+				<SolidColorBrush
+					Color="{DynamicResource LabelColour}" />
+			</Label.Background>
+		</Label>
+		<Button
+			Content="Complete calculations"
+			Grid.Column="1"
+			Margin="88,23,39,38"
+			Grid.ColumnSpan="3"
+			FontFamily="OCR A Extended"
+			FontSize="16"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Height="30"
+			Click="ActivateCalculations" />
+	</Grid>
 </Window>

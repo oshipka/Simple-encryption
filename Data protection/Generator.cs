@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Windows.Documents;
 
 namespace Data_protection
@@ -16,7 +17,7 @@ namespace Data_protection
 
 		public Generator()
 		{
-			_p = GetRandomPrimeNumber();
+			_p = /*22697;*/ GetRandomPrimeNumber();
 			_a = GetPrimaryRoot(_p);
 			_randA = GetRandomNumber();
 			_randB = GetRandomNumber();
@@ -29,15 +30,15 @@ namespace Data_protection
 		private static int GetRandomPrimeNumber()
 		{
 			var random = new Random();
-			var randomVal = random.Next(1000, 1000000);
-			var result = 6 * randomVal + (randomVal % 2);
+			var randomVal = random.Next(10, 100);
+			var result = 6 * randomVal + (int) Math.Pow(-1, randomVal);
 			return result;
 		}
 
 		private static int GetRandomNumber()
 		{
 			var random = new Random();
-			return random.Next(1000, 1000000);
+			return random.Next(10, 100);
 		}
 
 		private static int GetPrimaryRoot(int val)
@@ -47,23 +48,25 @@ namespace Data_protection
 				var cnt = 0;
 				for (var k = 1; k < val; k++)
 				{
-					if ((int)Math.Pow(a, k)% val == 1)
+					Console.WriteLine(k);
+					if (new BigInteger(Math.Pow(a, k)) % val == 1)
 					{
 						cnt += 1;
 					}
 				}
 
-				if (cnt == 1 && (int)Math.Pow(a, val-1)% val == 1)
+				if (cnt == 1 && new BigInteger(Math.Pow(a, val - 1)) % val == 1)
 				{
 					return a;
 				}
 			}
+
 			throw new Exception("Could not calculate primary root");
 		}
 
 		private static int CalculateA(int power)
 		{
-			return (int)Math.Pow(_a, power) % _p;
+			return (int) Math.Pow(_a, power) % _p;
 		}
 
 		private static int CalculateK(int val, int power)
