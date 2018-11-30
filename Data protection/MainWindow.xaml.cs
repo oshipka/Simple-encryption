@@ -38,6 +38,15 @@ namespace Data_protection
 				YLabel.Content = numbers.GetY().ToString();
 				kLabel.Content = numbers.GetK().ToString();
 				kpLabel.Content = numbers.GetKP().ToString();
+
+				pLabel.Width = double.NaN;
+				ALabel.Width = double.NaN;
+				BLabel.Width = double.NaN;
+				aLabel.Width = double.NaN;
+				XLabel.Width = double.NaN;
+				YLabel.Width = double.NaN;
+				kLabel.Width = double.NaN;
+				kpLabel.Width = double.NaN;
 			}
 			catch (Exception exception)
 			{
