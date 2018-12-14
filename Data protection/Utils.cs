@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Threading;
 
 namespace Data_protection
 {
@@ -18,40 +16,99 @@ namespace Data_protection
 			return Math.Abs(m);
 		}
 
-		public static int[] GetNumbers(string keyInputText)
+		public static int GetRandomPrimeNumber(Random random,  int max)
 		{
-			var numbers = keyInputText.Split(' ');
-
-			var numbersInts = new int[numbers.Length];
-
-			for (var i = 0; i < numbers.Length; i++)
+			var randomVal = random.Next(1, max);
+			var result = 6 * randomVal + (int) Math.Pow(-1, randomVal);
+			if (!CheckStatic(result))
 			{
-				if (!int.TryParse(numbers[i], out numbersInts[i]))
-				{
-					throw new InvalidDataException("Entered key is not an integer");
-				}
-			}
-			
-			for (var i = 0; i < 2; i++)
-			{
-				if (numbersInts[i]<100||numbersInts[i]>999)
-				{
-					throw new InvalidDataException("Entered numbers are incorrect. (Must be from [100; 999])");
-				}
+				result = GetRandomPrimeNumber(random, max);
 			}
 
-			if (Gcd(numbersInts[0], numbersInts[1]) != 1)
-			{
-				throw new InvalidDataException("Numbers are not coprime");
-			}
-
-			if (numbersInts[0] % 4 != 3 || numbersInts[1] % 4 != 3)
-			{
-				throw new InvalidDataException("Numbers are not congruent to 3 (mod 4)");
-			}
-			return numbersInts;
+			return result;
 		}
 
+		public static int GetRandomNumber(Random random)
+		{
+			return random.Next(100, 1000);
+		}
+
+		public static int GetPrimaryRoot(int val)
+		{
+			for (var a = 1; a < val + 1; a++)
+			{
+				var cnt = 0;
+				for (var k = 1; k < val; k++)
+				{
+					Console.WriteLine(k);
+					if (Pow(a, k) % val == 1)
+					{
+						cnt += 1;
+					}
+				}
+
+				if (cnt == 1 && Pow(a, val - 1) % val == 1)
+				{
+					return a;
+				}
+			}
+
+			throw new Exception("Could not calculate primary root");
+		}
+		
+		private static int Pow(int a, int pov)
+		{
+			int result = 1;
+			var oddity = pov % 2;
+			var div = pov / 2;
+
+			while (div != 0)
+			{
+
+				result *= a*a;
+				div--;
+			}
+		
+			if (oddity == 1)
+			{
+				result *= a;
+			}
+			return result;
+		}
+		
+		private static bool CheckStatic(int n)
+		{
+			if (n == 2 || n == 3)
+				return true;
+			if (n < 2 || n % 2 == 0)
+				return false;
+			if (n < 9)
+				return true;
+			if (n % 3 == 0)
+				return false;
+			var r = (n /2);
+			var f = 5;
+			while (f <= r)
+			{
+				if (n % f == 0)
+					return false;
+				if (n % (f + 2) == 0)
+					return false;
+				f += 6;
+			}
+
+			return true;
+		}
+
+		public static int GPowXModP(int g, int x, int p)
+		{
+			return Pow(g, x) % p;
+		}
+		
+		
+		
+		
+		
 		public static int GetCoprime(int i)
 		{
 			var random = new Random();
