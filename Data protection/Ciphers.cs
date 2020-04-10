@@ -7,6 +7,8 @@ namespace Data_protection
 {
 	public class Ciphers
 	{
+		Random random = new Random();
+		
 		public class PrivateKey
 		{
 			public static int _p;
@@ -171,17 +173,21 @@ namespace Data_protection
 				var p = Utils.GetRandomPrimeNumber(num_bits, size)
 				var q = self.__find_prime(num_bits, size)
 
-				x = random.randint(1, (p - 1) // 2)
+				x = random.randint(1, Floor((p - 1) / 2));
 				y = pow(q, x, p)
 				return PrivateKey(p, q, x, num_bits), PublicKey(p, q, y, num_bits)
 			}
 
-			private static bool IsPrime(num, test_count)
+			private static bool IsPrime(int num, int test_count)
 			{
-				if num == 1:
-				return False
-				if test_count >= num:
-				test_count = num - 1
+				if (num == 1)
+				{
+					return False
+				}
+
+				if (test_count >= num)
+				{
+					test_count = num - 1
 				for x in
 				range(test_count) :
 				val = random.randint(1, num - 1)
@@ -190,16 +196,18 @@ namespace Data_protection
 				return True
 			}
 
-			private int FindPrime(self, num_bits, size)
+			private int FindPrime(int num_bits, int size)
 			{
+				int p;
+				
 				while
-				p = random.randint(2 * *(num_bits - 2), 2 * *(num_bits - 1))
+				p = random.Next(2 * *(num_bits - 2), 2 * *(num_bits - 1))
 				while p % 2 == 0:
-				p = random.randint(2 * *(num_bits - 2), 2 * *(num_bits - 1))
+				p = random.Next(2 * *(num_bits - 2), 2 * *(num_bits - 1))
 				while not self.__is_prime(p, size):
-				p = random.randint(2 * *(num_bits - 2), 2 * *(num_bits - 1))
+				p = random.Next(2 * *(num_bits - 2), 2 * *(num_bits - 1))
 				while p % 2 == 0:
-				p = random.randint(2 * *(num_bits - 2), 2 * *(num_bits - 1))
+				p = random.Next(2 * *(num_bits - 2), 2 * *(num_bits - 1))
 				p = p * 2 + 1
 				if self.__is_prime(p, size):
 				return p
